@@ -3,97 +3,621 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EYADA AI</title>
+
+<title>EYADA AI | Content Intelligence Platform</title>
+<meta name="description" content="EYADA is an AI-powered platform for creating, reviewing, publishing, and analyzing social media content across TikTok, YouTube, and X.">
 
 <style>
+:root{
+    --bg:#07111f;
+    --surface:#0d1b2d;
+    --surface-light:#13243a;
+    --text:#f8fafc;
+    --muted:#a9b8ca;
+    --accent:#22d3ee;
+    --accent-two:#7c3aed;
+    --border:rgba(255,255,255,.10);
+}
+
+*{
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
 body{
     margin:0;
     font-family:Arial,Helvetica,sans-serif;
-    background:#0f172a;
-    color:#fff;
-}
-
-.hero{
-    max-width:900px;
-    margin:80px auto;
-    text-align:center;
-    padding:40px;
-}
-
-h1{
-    font-size:58px;
-    margin-bottom:10px;
-}
-
-p{
-    font-size:20px;
-    color:#cbd5e1;
-    line-height:1.7;
-}
-
-.badge{
-    display:inline-block;
-    padding:8px 18px;
-    background:#2563eb;
-    border-radius:50px;
-    margin-bottom:30px;
-    font-size:14px;
-}
-
-.links{
-    margin-top:45px;
+    background:
+        radial-gradient(circle at 15% 10%, rgba(34,211,238,.13), transparent 28%),
+        radial-gradient(circle at 85% 15%, rgba(124,58,237,.16), transparent 30%),
+        var(--bg);
+    color:var(--text);
 }
 
 a{
-    display:inline-block;
-    margin:10px;
-    padding:14px 28px;
-    text-decoration:none;
-    color:white;
-    background:#2563eb;
-    border-radius:8px;
-    transition:.2s;
+    color:inherit;
 }
 
-a:hover{
-    background:#1d4ed8;
+.container{
+    width:min(1120px, calc(100% - 40px));
+    margin:auto;
+}
+
+nav{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:rgba(7,17,31,.88);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+}
+
+.nav-inner{
+    min-height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+}
+
+.brand{
+    font-size:24px;
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.brand span{
+    color:var(--accent);
+}
+
+.nav-links{
+    display:flex;
+    gap:24px;
+    flex-wrap:wrap;
+}
+
+.nav-links a{
+    color:var(--muted);
+    text-decoration:none;
+    font-size:14px;
+}
+
+.nav-links a:hover{
+    color:var(--text);
+}
+
+.hero{
+    padding:110px 0 90px;
+    text-align:center;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 16px;
+    border:1px solid rgba(34,211,238,.28);
+    border-radius:999px;
+    color:#a5f3fc;
+    background:rgba(34,211,238,.08);
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.4px;
+}
+
+h1{
+    max-width:900px;
+    margin:26px auto 20px;
+    font-size:clamp(44px,7vw,76px);
+    line-height:1.04;
+    letter-spacing:-2px;
+}
+
+.hero p{
+    max-width:780px;
+    margin:0 auto;
+    color:var(--muted);
+    font-size:20px;
+    line-height:1.75;
+}
+
+.actions{
+    margin-top:38px;
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+.button{
+    display:inline-block;
+    padding:14px 24px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:700;
+    border:1px solid var(--border);
+}
+
+.button-primary{
+    background:linear-gradient(135deg,var(--accent),var(--accent-two));
+    color:white;
+    border:none;
+}
+
+.button-secondary{
+    background:rgba(255,255,255,.04);
+}
+
+.stats{
+    margin-top:70px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+    background:rgba(255,255,255,.03);
+}
+
+.stat{
+    padding:28px 18px;
+}
+
+.stat + .stat{
+    border-left:1px solid var(--border);
+}
+
+.stat strong{
+    display:block;
+    font-size:22px;
+    margin-bottom:7px;
+}
+
+.stat span{
+    color:var(--muted);
+    font-size:14px;
+}
+
+section{
+    padding:82px 0;
+}
+
+.section-heading{
+    max-width:720px;
+    margin-bottom:42px;
+}
+
+.eyebrow{
+    color:var(--accent);
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+}
+
+h2{
+    margin:10px 0 14px;
+    font-size:clamp(32px,5vw,48px);
+    letter-spacing:-1px;
+}
+
+.section-heading p,
+.about-copy p{
+    color:var(--muted);
+    font-size:18px;
+    line-height:1.75;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.card{
+    padding:28px;
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));
+}
+
+.icon{
+    width:44px;
+    height:44px;
+    border-radius:12px;
+    display:grid;
+    place-items:center;
+    margin-bottom:22px;
+    background:linear-gradient(135deg,rgba(34,211,238,.18),rgba(124,58,237,.2));
+    font-size:20px;
+}
+
+.card h3{
+    margin:0 0 11px;
+    font-size:21px;
+}
+
+.card p{
+    margin:0;
+    color:var(--muted);
+    line-height:1.65;
+}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:12px;
+}
+
+.step{
+    position:relative;
+    padding:24px 18px;
+    text-align:center;
+    border:1px solid var(--border);
+    border-radius:16px;
+    background:var(--surface);
+}
+
+.step-number{
+    width:34px;
+    height:34px;
+    display:grid;
+    place-items:center;
+    margin:0 auto 15px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),var(--accent-two));
+    font-weight:800;
+}
+
+.step p{
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.5;
+}
+
+.platforms{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+.platform{
+    padding:16px 22px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:rgba(255,255,255,.04);
+    font-weight:700;
+}
+
+.about{
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:28px;
+    align-items:stretch;
+}
+
+.about-copy,
+.contact-card{
+    padding:34px;
+    border:1px solid var(--border);
+    border-radius:20px;
+    background:var(--surface);
+}
+
+.contact-card h3{
+    margin-top:0;
+}
+
+.contact-card p{
+    color:var(--muted);
+    line-height:1.7;
+}
+
+.contact-card a{
+    color:var(--accent);
+    text-decoration:none;
 }
 
 footer{
-    margin-top:80px;
-    color:#94a3b8;
-    font-size:14px;
+    border-top:1px solid var(--border);
+    padding:30px 0;
+    color:var(--muted);
+}
+
+.footer-inner{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.footer-links{
+    display:flex;
+    gap:18px;
+}
+
+.footer-links a{
+    color:var(--muted);
+    text-decoration:none;
+}
+
+@media (max-width:850px){
+    .grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .workflow{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .about{
+        grid-template-columns:1fr;
+    }
+}
+
+@media (max-width:620px){
+    .nav-links{
+        display:none;
+    }
+
+    .hero{
+        padding-top:78px;
+    }
+
+    .grid,
+    .workflow,
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .stat + .stat{
+        border-left:0;
+        border-top:1px solid var(--border);
+    }
 }
 </style>
-
 </head>
 
 <body>
 
-<div class="hero">
+<nav>
+    <div class="container nav-inner">
+        <div class="brand">EYADA <span>AI</span></div>
 
-<div class="badge">
-Official Website
-</div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#features">Features</a>
+            <a href="#workflow">How It Works</a>
+            <a href="#platforms">Platforms</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
+</nav>
 
-<h1>EYADA AI</h1>
+<header class="hero">
+    <div class="container">
+        <div class="badge">AI-Powered Content Intelligence Platform</div>
 
-<p>
-Autonomous AI platform for content generation, analytics,
-social media publishing, and continuous learning across
-TikTok, YouTube, X and other digital channels.
-</p>
+        <h1>Create, publish, analyze and continuously improve social media content.</h1>
 
-<div class="links">
-<a href="privacy.html">Privacy Policy</a>
-<a href="terms.html">Terms of Service</a>
-</div>
+        <p>
+            EYADA brings content generation, editorial review, multi-platform publishing,
+            performance analytics and continuous AI learning into one unified workflow.
+        </p>
+
+        <div class="actions">
+            <a class="button button-primary" href="#features">Explore the Platform</a>
+            <a class="button button-secondary" href="#contact">Contact EYADA</a>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <strong>AI Content</strong>
+                <span>Ideas, scripts, captions and production support</span>
+            </div>
+
+            <div class="stat">
+                <strong>Multi-Platform</strong>
+                <span>Publishing workflows for TikTok, YouTube and X</span>
+            </div>
+
+            <div class="stat">
+                <strong>Continuous Learning</strong>
+                <span>Performance signals improve future content decisions</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+
+<section id="about">
+    <div class="container">
+        <div class="section-heading">
+            <div class="eyebrow">About EYADA</div>
+            <h2>A complete operating system for intelligent content.</h2>
+            <p>
+                EYADA is an online AI platform designed to help creators manage the full
+                content lifecycle: discovering ideas, producing content, reviewing output,
+                publishing approved videos and analyzing results.
+            </p>
+        </div>
+
+        <div class="about">
+            <div class="about-copy">
+                <h3>Built for real content operations</h3>
+                <p>
+                    The platform connects content creation with measurable audience feedback.
+                    It helps organize videos, publishing decisions, platform integrations and
+                    performance data in one place.
+                </p>
+                <p>
+                    EYADA uses authorized platform integrations only after the account owner
+                    grants permission. Users remain in control of their content and connected
+                    accounts.
+                </p>
+            </div>
+
+            <div class="contact-card">
+                <h3>Current integration scope</h3>
+                <p>
+                    TikTok Login Kit is used to authorize accounts. TikTok Content Posting API
+                    is used to send approved videos from EYADA to the authorized TikTok account.
+                </p>
+                <p>
+                    YouTube and X publishing and analytics workflows are also part of the
+                    platform's multi-channel content operations.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="features">
+    <div class="container">
+        <div class="section-heading">
+            <div class="eyebrow">Platform Features</div>
+            <h2>Everything needed from idea to measurable result.</h2>
+        </div>
+
+        <div class="grid">
+            <article class="card">
+                <div class="icon">✦</div>
+                <h3>AI Content Generation</h3>
+                <p>Develop content ideas, scripts, hooks, captions and structured creative concepts.</p>
+            </article>
+
+            <article class="card">
+                <div class="icon">✓</div>
+                <h3>Editorial Review</h3>
+                <p>Review and approve content before it moves into the publishing workflow.</p>
+            </article>
+
+            <article class="card">
+                <div class="icon">▶</div>
+                <h3>Video Management</h3>
+                <p>Organize video assets, publishing status, metadata and platform readiness.</p>
+            </article>
+
+            <article class="card">
+                <div class="icon">↗</div>
+                <h3>Social Publishing</h3>
+                <p>Send approved content to authorized TikTok, YouTube and X accounts.</p>
+            </article>
+
+            <article class="card">
+                <div class="icon">▥</div>
+                <h3>Performance Analytics</h3>
+                <p>Track available engagement and performance indicators after publication.</p>
+            </article>
+
+            <article class="card">
+                <div class="icon">∞</div>
+                <h3>Continuous Improvement</h3>
+                <p>Use content results and audience signals to improve future content decisions.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section id="workflow">
+    <div class="container">
+        <div class="section-heading">
+            <div class="eyebrow">How It Works</div>
+            <h2>A clear end-to-end content workflow.</h2>
+        </div>
+
+        <div class="workflow">
+            <div class="step">
+                <div class="step-number">1</div>
+                <strong>Discover</strong>
+                <p>Identify ideas and topics suitable for the audience.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <strong>Create</strong>
+                <p>Generate scripts, captions and video content.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <strong>Review</strong>
+                <p>Approve the content and publishing details.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <strong>Publish</strong>
+                <p>Send approved content to the selected platform.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">5</div>
+                <strong>Learn</strong>
+                <p>Use performance results to improve future decisions.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="platforms">
+    <div class="container">
+        <div class="section-heading">
+            <div class="eyebrow">Connected Channels</div>
+            <h2>Designed for modern multi-platform publishing.</h2>
+        </div>
+
+        <div class="platforms">
+            <div class="platform">TikTok</div>
+            <div class="platform">YouTube</div>
+            <div class="platform">X</div>
+            <div class="platform">Content Analytics</div>
+            <div class="platform">AI Recommendations</div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="container">
+        <div class="about">
+            <div class="about-copy">
+                <div class="eyebrow">Privacy and Control</div>
+                <h2>Authorized access only.</h2>
+                <p>
+                    EYADA accesses connected platform information only after explicit user
+                    authorization. Access is limited to the functionality required to provide
+                    authentication, publishing and analytics services.
+                </p>
+
+                <div class="actions" style="justify-content:flex-start">
+                    <a class="button button-secondary" href="privacy.html">Privacy Policy</a>
+                    <a class="button button-secondary" href="terms.html">Terms of Service</a>
+                </div>
+            </div>
+
+            <div class="contact-card">
+                <h3>Contact</h3>
+                <p>For product, privacy or integration enquiries:</p>
+                <p><a href="mailto:eyada.world@gmail.com">eyada.world@gmail.com</a></p>
+                <p>EYADA is an independent online AI content platform.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+</main>
 
 <footer>
-© 2026 EYADA AI. All rights reserved.
-</footer>
+    <div class="container footer-inner">
+        <div>© 2026 EYADA AI. All rights reserved.</div>
 
-</div>
+        <div class="footer-links">
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="mailto:eyada.world@gmail.com">Contact</a>
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>
