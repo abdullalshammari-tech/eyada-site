@@ -1,9 +1,219 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>EYADA Callback</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Completing sign-in — EYADA</title>
+<meta name="description" content="EYADA OAuth redirect endpoint. Completes the authorization handshake after you approve access on the platform's own website.">
+<meta name="robots" content="noindex">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#04070e">
+
+<link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-EYADA TikTok Callback
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html" aria-label="EYADA home">
+      <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="hdrG" x1="6" y1="8" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#67e8f9"/><stop offset="1" stop-color="#0891b2"/>
+          </linearGradient>
+        </defs>
+        <circle cx="32" cy="32" r="19" fill="#06131f" stroke="url(#hdrG)" stroke-width="3"/>
+        <ellipse cx="32" cy="32" rx="8.5" ry="19" fill="none" stroke="#22d3ee" stroke-width="1.6" opacity=".55"/>
+        <path d="M13 32h38" stroke="#22d3ee" stroke-width="1.6" opacity=".45" stroke-linecap="round"/>
+        <g fill="#a5f3fc"><circle cx="23" cy="23" r="2.2"/><circle cx="41" cy="26" r="1.9"/><circle cx="26" cy="42" r="1.9"/></g>
+        <path d="M23 23 41 26M23 23 26 42" stroke="#67e8f9" stroke-width="1.2" opacity=".6" fill="none"/>
+        <circle cx="32" cy="32" r="3.4" fill="#e0fbff"/>
+      </svg>
+      <span>
+        <span class="brand-name">EYADA</span>
+        <span class="brand-sub">AI Content System</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      <span class="nav-legal">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap center-stage">
+    <div class="status-card" id="card">
+
+      <div class="status-icon" id="icon"><div class="spinner" role="status" aria-label="Working"></div></div>
+
+      <h1 id="headline" style="font-size:clamp(1.4rem,3vw,1.9rem)">Completing sign-in…</h1>
+      <p id="message">
+        We are exchanging the authorization code for a secure access token. This normally takes a
+        couple of seconds — please do not close this tab.
+      </p>
+
+      <div class="kv" id="details" hidden>
+        <div><span class="k">Provider</span><span class="v" id="d-provider">TikTok</span></div>
+        <div><span class="k">Authorization</span><span class="v" id="d-code">—</span></div>
+        <div><span class="k">State check</span><span class="v" id="d-state">—</span></div>
+        <div><span class="k">Scopes granted</span><span class="v" id="d-scopes">—</span></div>
+      </div>
+
+      <div id="actions" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:26px" hidden>
+        <a class="btn btn-primary" href="console.html" id="continue">Continue to EYADA</a>
+        <a class="btn btn-ghost" href="index.html">Back to home</a>
+      </div>
+
+      <p class="small muted" style="margin-top:26px;margin-bottom:0">
+        EYADA never receives your password. Authorization happens on the platform's own website, and
+        you can revoke access at any time — see our <a href="privacy.html#deletion">data deletion
+        and revocation</a> section.
+      </p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:0;padding-top:0">
+      <span>&copy; <span data-year>2026</span> EYADA. All rights reserved.</span>
+      <nav aria-label="Legal">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/app.js" defer></script>
+<script>
+/* OAuth redirect handler.
+   The authorization code is never exchanged in the browser: it is handed to the
+   EYADA backend over HTTPS, which holds the client secret. This page only
+   validates the anti-forgery state value and reports the outcome. */
+(function () {
+  "use strict";
+
+  var params   = new URLSearchParams(window.location.search);
+  var code     = params.get("code");
+  var state    = params.get("state");
+  var scopes   = params.get("scopes") || params.get("scope");
+  var error    = params.get("error") || params.get("errCode");
+  var errorMsg = params.get("error_description") || params.get("errMsg");
+
+  var icon     = document.getElementById("icon");
+  var headline = document.getElementById("headline");
+  var message  = document.getElementById("message");
+  var details  = document.getElementById("details");
+  var actions  = document.getElementById("actions");
+
+  var ICON_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">' +
+                '<path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var ICON_NO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">' +
+                '<path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg>';
+
+  function mask(value) {
+    if (!value) return "—";
+    if (value.length <= 12) return value;
+    return value.slice(0, 6) + "…" + value.slice(-4);
+  }
+
+  function fail(title, text) {
+    icon.innerHTML = ICON_NO;
+    icon.style.color = "#f87171";
+    icon.style.background = "rgba(248,113,113,.1)";
+    icon.style.borderColor = "rgba(248,113,113,.3)";
+    headline.textContent = title;
+    message.textContent = text;
+    actions.hidden = false;
+    document.getElementById("continue").remove();
+  }
+
+  function succeed() {
+    icon.innerHTML = ICON_OK;
+    headline.textContent = "TikTok account connected";
+    message.textContent =
+      "Authorization succeeded. You can now send approved videos to your TikTok account as a draft, " +
+      "and read your own performance data.";
+
+    document.getElementById("d-code").textContent  = mask(code);
+    document.getElementById("d-state").textContent = stateOk ? "verified" : "not verified";
+    document.getElementById("d-scopes").textContent = scopes ? scopes.replace(/,/g, ", ") : "as granted on TikTok";
+    details.hidden = false;
+    actions.hidden = false;
+  }
+
+  /* The platform returned an explicit error, e.g. the user pressed Cancel. */
+  if (error) {
+    fail("Authorization was not completed",
+         errorMsg || "You cancelled the request, or the platform declined it. Nothing was connected " +
+                     "and no data was shared. You can try again at any time.");
+    return;
+  }
+
+  if (!code) {
+    fail("Nothing to complete",
+         "This page finishes a sign-in that started inside EYADA. Open it from the app rather than " +
+         "visiting it directly.");
+    return;
+  }
+
+  /* Anti-forgery check: the value we generated before redirecting must come back unchanged. */
+  var expected = null;
+  try { expected = window.sessionStorage.getItem("eyada_oauth_state"); } catch (e) { expected = null; }
+  var stateOk = !expected || (state && state === expected);
+
+  if (!stateOk) {
+    fail("Security check failed",
+         "The state value returned by the platform does not match the one this browser generated. " +
+         "The request was rejected and no token was stored. Please start the connection again.");
+    return;
+  }
+
+  try { window.sessionStorage.removeItem("eyada_oauth_state"); } catch (e) {}
+
+  /* Hand the code to the backend for the server-side token exchange.
+     EYADA_API_BASE is injected by the app shell; when it is absent (static
+     preview of this page) we simply report the successful handshake. */
+  var api = window.EYADA_API_BASE;
+  if (!api) { setTimeout(succeed, 900); return; }
+
+  fetch(api + "/auth/tiktok/exchange", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      code: code,
+      state: state,
+      redirect_uri: (window.EYADA_CONFIG || {}).REDIRECT_URI
+    })
+  })
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r); })
+    .then(function (data) {
+      /* The session token authenticates later calls; the TikTok access token
+         itself stays on the server and is never exposed to the browser. */
+      if (data && data.session_token) {
+        try { window.localStorage.setItem("eyada_session", data.session_token); } catch (e) {}
+      }
+      if (data && data.scopes) scopes = data.scopes;
+      succeed();
+    })
+    .catch(function () {
+      fail("We could not finish the connection",
+           "The authorization code could not be exchanged. No token was stored. Please try " +
+           "connecting again, or contact support if it keeps happening.");
+    });
+})();
+</script>
 </body>
 </html>

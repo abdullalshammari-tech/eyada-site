@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /callback.html
+Disallow: /console.html
+
+Sitemap: /sitemap.xml

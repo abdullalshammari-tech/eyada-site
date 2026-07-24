@@ -1,623 +1,778 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EYADA — AI Content System for TikTok, YouTube &amp; X</title>
+<meta name="description" content="EYADA is an AI content system that plans, writes, renders and schedules short-form video for TikTok, YouTube and X. Every post is reviewed and approved by a human before it is published.">
+<meta name="author" content="EYADA">
+<link rel="canonical" href="./index.html">
 
-<title>EYADA AI | Content Intelligence Platform</title>
-<meta name="description" content="EYADA is an AI-powered platform for creating, reviewing, publishing, and analyzing social media content across TikTok, YouTube, and X.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#04070e">
 
-<style>
-:root{
-    --bg:#07111f;
-    --surface:#0d1b2d;
-    --surface-light:#13243a;
-    --text:#f8fafc;
-    --muted:#a9b8ca;
-    --accent:#22d3ee;
-    --accent-two:#7c3aed;
-    --border:rgba(255,255,255,.10);
-}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EYADA">
+<meta property="og:title" content="EYADA — AI Content System">
+<meta property="og:description" content="Plan, generate, review and publish short-form video across TikTok, YouTube and X — with a human approving every post.">
+<meta property="og:image" content="assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="EYADA — AI Content System">
+<meta name="twitter:description" content="Plan, generate, review and publish short-form video across TikTok, YouTube and X — with a human approving every post.">
+<meta name="twitter:image" content="assets/og-image.png">
 
-*{
-    box-sizing:border-box;
-    scroll-behavior:smooth;
-}
-
-body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:
-        radial-gradient(circle at 15% 10%, rgba(34,211,238,.13), transparent 28%),
-        radial-gradient(circle at 85% 15%, rgba(124,58,237,.16), transparent 30%),
-        var(--bg);
-    color:var(--text);
-}
-
-a{
-    color:inherit;
-}
-
-.container{
-    width:min(1120px, calc(100% - 40px));
-    margin:auto;
-}
-
-nav{
-    position:sticky;
-    top:0;
-    z-index:20;
-    background:rgba(7,17,31,.88);
-    backdrop-filter:blur(14px);
-    border-bottom:1px solid var(--border);
-}
-
-.nav-inner{
-    min-height:72px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:24px;
-}
-
-.brand{
-    font-size:24px;
-    font-weight:800;
-    letter-spacing:2px;
-}
-
-.brand span{
-    color:var(--accent);
-}
-
-.nav-links{
-    display:flex;
-    gap:24px;
-    flex-wrap:wrap;
-}
-
-.nav-links a{
-    color:var(--muted);
-    text-decoration:none;
-    font-size:14px;
-}
-
-.nav-links a:hover{
-    color:var(--text);
-}
-
-.hero{
-    padding:110px 0 90px;
-    text-align:center;
-}
-
-.badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:9px 16px;
-    border:1px solid rgba(34,211,238,.28);
-    border-radius:999px;
-    color:#a5f3fc;
-    background:rgba(34,211,238,.08);
-    font-size:13px;
-    font-weight:700;
-    letter-spacing:.4px;
-}
-
-h1{
-    max-width:900px;
-    margin:26px auto 20px;
-    font-size:clamp(44px,7vw,76px);
-    line-height:1.04;
-    letter-spacing:-2px;
-}
-
-.hero p{
-    max-width:780px;
-    margin:0 auto;
-    color:var(--muted);
-    font-size:20px;
-    line-height:1.75;
-}
-
-.actions{
-    margin-top:38px;
-    display:flex;
-    justify-content:center;
-    gap:14px;
-    flex-wrap:wrap;
-}
-
-.button{
-    display:inline-block;
-    padding:14px 24px;
-    border-radius:10px;
-    text-decoration:none;
-    font-weight:700;
-    border:1px solid var(--border);
-}
-
-.button-primary{
-    background:linear-gradient(135deg,var(--accent),var(--accent-two));
-    color:white;
-    border:none;
-}
-
-.button-secondary{
-    background:rgba(255,255,255,.04);
-}
-
-.stats{
-    margin-top:70px;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    border:1px solid var(--border);
-    border-radius:18px;
-    overflow:hidden;
-    background:rgba(255,255,255,.03);
-}
-
-.stat{
-    padding:28px 18px;
-}
-
-.stat + .stat{
-    border-left:1px solid var(--border);
-}
-
-.stat strong{
-    display:block;
-    font-size:22px;
-    margin-bottom:7px;
-}
-
-.stat span{
-    color:var(--muted);
-    font-size:14px;
-}
-
-section{
-    padding:82px 0;
-}
-
-.section-heading{
-    max-width:720px;
-    margin-bottom:42px;
-}
-
-.eyebrow{
-    color:var(--accent);
-    font-size:13px;
-    font-weight:800;
-    letter-spacing:1.4px;
-    text-transform:uppercase;
-}
-
-h2{
-    margin:10px 0 14px;
-    font-size:clamp(32px,5vw,48px);
-    letter-spacing:-1px;
-}
-
-.section-heading p,
-.about-copy p{
-    color:var(--muted);
-    font-size:18px;
-    line-height:1.75;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-
-.card{
-    padding:28px;
-    border:1px solid var(--border);
-    border-radius:18px;
-    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));
-}
-
-.icon{
-    width:44px;
-    height:44px;
-    border-radius:12px;
-    display:grid;
-    place-items:center;
-    margin-bottom:22px;
-    background:linear-gradient(135deg,rgba(34,211,238,.18),rgba(124,58,237,.2));
-    font-size:20px;
-}
-
-.card h3{
-    margin:0 0 11px;
-    font-size:21px;
-}
-
-.card p{
-    margin:0;
-    color:var(--muted);
-    line-height:1.65;
-}
-
-.workflow{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:12px;
-}
-
-.step{
-    position:relative;
-    padding:24px 18px;
-    text-align:center;
-    border:1px solid var(--border);
-    border-radius:16px;
-    background:var(--surface);
-}
-
-.step-number{
-    width:34px;
-    height:34px;
-    display:grid;
-    place-items:center;
-    margin:0 auto 15px;
-    border-radius:50%;
-    background:linear-gradient(135deg,var(--accent),var(--accent-two));
-    font-weight:800;
-}
-
-.step p{
-    color:var(--muted);
-    font-size:14px;
-    line-height:1.5;
-}
-
-.platforms{
-    display:flex;
-    gap:14px;
-    flex-wrap:wrap;
-}
-
-.platform{
-    padding:16px 22px;
-    border:1px solid var(--border);
-    border-radius:12px;
-    background:rgba(255,255,255,.04);
-    font-weight:700;
-}
-
-.about{
-    display:grid;
-    grid-template-columns:1.2fr .8fr;
-    gap:28px;
-    align-items:stretch;
-}
-
-.about-copy,
-.contact-card{
-    padding:34px;
-    border:1px solid var(--border);
-    border-radius:20px;
-    background:var(--surface);
-}
-
-.contact-card h3{
-    margin-top:0;
-}
-
-.contact-card p{
-    color:var(--muted);
-    line-height:1.7;
-}
-
-.contact-card a{
-    color:var(--accent);
-    text-decoration:none;
-}
-
-footer{
-    border-top:1px solid var(--border);
-    padding:30px 0;
-    color:var(--muted);
-}
-
-.footer-inner{
-    display:flex;
-    justify-content:space-between;
-    gap:20px;
-    flex-wrap:wrap;
-}
-
-.footer-links{
-    display:flex;
-    gap:18px;
-}
-
-.footer-links a{
-    color:var(--muted);
-    text-decoration:none;
-}
-
-@media (max-width:850px){
-    .grid{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .workflow{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .about{
-        grid-template-columns:1fr;
-    }
-}
-
-@media (max-width:620px){
-    .nav-links{
-        display:none;
-    }
-
-    .hero{
-        padding-top:78px;
-    }
-
-    .grid,
-    .workflow,
-    .stats{
-        grid-template-columns:1fr;
-    }
-
-    .stat + .stat{
-        border-left:0;
-        border-top:1px solid var(--border);
-    }
-}
-</style>
+<link rel="stylesheet" href="assets/styles.css">
 </head>
-
 <body>
 
-<nav>
-    <div class="container nav-inner">
-        <div class="brand">EYADA <span>AI</span></div>
+<a class="skip-link" href="#main">Skip to content</a>
 
-        <div class="nav-links">
-            <a href="#about">About</a>
-            <a href="#features">Features</a>
-            <a href="#workflow">How It Works</a>
-            <a href="#platforms">Platforms</a>
-            <a href="#contact">Contact</a>
-        </div>
-    </div>
-</nav>
+<!-- ======================================================================
+     HEADER — Privacy Policy and Terms of Service are permanently visible
+     here on every screen size. They are never placed inside a menu.
+     ====================================================================== -->
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html" aria-label="EYADA home">
+      <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="hdrG" x1="6" y1="8" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#67e8f9"/><stop offset="1" stop-color="#0891b2"/>
+          </linearGradient>
+        </defs>
+        <circle cx="32" cy="32" r="19" fill="#06131f" stroke="url(#hdrG)" stroke-width="3"/>
+        <ellipse cx="32" cy="32" rx="8.5" ry="19" fill="none" stroke="#22d3ee" stroke-width="1.6" opacity=".55"/>
+        <path d="M13 32h38" stroke="#22d3ee" stroke-width="1.6" opacity=".45" stroke-linecap="round"/>
+        <g fill="#a5f3fc"><circle cx="23" cy="23" r="2.2"/><circle cx="41" cy="26" r="1.9"/><circle cx="26" cy="42" r="1.9"/></g>
+        <path d="M23 23 41 26M23 23 26 42" stroke="#67e8f9" stroke-width="1.2" opacity=".6" fill="none"/>
+        <circle cx="32" cy="32" r="3.4" fill="#e0fbff"/>
+      </svg>
+      <span>
+        <span class="brand-name">EYADA</span>
+        <span class="brand-sub">AI Content System</span>
+      </span>
+    </a>
 
-<header class="hero">
-    <div class="container">
-        <div class="badge">AI-Powered Content Intelligence Platform</div>
-
-        <h1>Create, publish, analyze and continuously improve social media content.</h1>
-
-        <p>
-            EYADA brings content generation, editorial review, multi-platform publishing,
-            performance analytics and continuous AI learning into one unified workflow.
-        </p>
-
-        <div class="actions">
-            <a class="button button-primary" href="#features">Explore the Platform</a>
-            <a class="button button-secondary" href="#contact">Contact EYADA</a>
-        </div>
-
-        <div class="stats">
-            <div class="stat">
-                <strong>AI Content</strong>
-                <span>Ideas, scripts, captions and production support</span>
-            </div>
-
-            <div class="stat">
-                <strong>Multi-Platform</strong>
-                <span>Publishing workflows for TikTok, YouTube and X</span>
-            </div>
-
-            <div class="stat">
-                <strong>Continuous Learning</strong>
-                <span>Performance signals improve future content decisions</span>
-            </div>
-        </div>
-    </div>
+    <nav class="nav" aria-label="Main">
+      <span class="nav-main" style="display:contents">
+        <a href="#features">Product</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#platforms">Platforms</a>
+        <a href="#analytics">Analytics</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </span>
+      <span class="nav-legal">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </span>
+    </nav>
+  </div>
 </header>
 
-<main>
+<main id="main">
 
-<section id="about">
-    <div class="container">
-        <div class="section-heading">
-            <div class="eyebrow">About EYADA</div>
-            <h2>A complete operating system for intelligent content.</h2>
-            <p>
-                EYADA is an online AI platform designed to help creators manage the full
-                content lifecycle: discovering ideas, producing content, reviewing output,
-                publishing approved videos and analyzing results.
-            </p>
-        </div>
-
-        <div class="about">
-            <div class="about-copy">
-                <h3>Built for real content operations</h3>
-                <p>
-                    The platform connects content creation with measurable audience feedback.
-                    It helps organize videos, publishing decisions, platform integrations and
-                    performance data in one place.
-                </p>
-                <p>
-                    EYADA uses authorized platform integrations only after the account owner
-                    grants permission. Users remain in control of their content and connected
-                    accounts.
-                </p>
-            </div>
-
-            <div class="contact-card">
-                <h3>Current integration scope</h3>
-                <p>
-                    TikTok Login Kit is used to authorize accounts. TikTok Content Posting API
-                    is used to send approved videos from EYADA to the authorized TikTok account.
-                </p>
-                <p>
-                    YouTube and X publishing and analytics workflows are also part of the
-                    platform's multi-channel content operations.
-                </p>
-            </div>
-        </div>
+<!-- ====================== HERO ====================== -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="pill"><span class="dot"></span> Human approval required before every publish</span>
+      <h1>The AI content system that <span class="grad">never posts without you</span>.</h1>
+      <p class="hero-lede">
+        EYADA researches what your audience is actually watching, writes the script, renders the
+        vertical video, and prepares it for TikTok, YouTube and X. Then it stops — and waits for a
+        person to approve it. Nothing reaches an audience automatically.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#contact">Request access</a>
+        <a class="btn btn-ghost" href="#workflow">See how it works</a>
+      </div>
+      <p class="hero-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linejoin="round"/>
+        </svg>
+        Connected accounts stay under your control. Revoke any platform at any time.
+      </p>
     </div>
+
+    <!-- Product interface: the approval queue -->
+    <div class="ui" role="img" aria-label="Screenshot of the EYADA review queue showing a video awaiting human approval">
+      <div class="ui-bar">
+        <span class="ui-dots"><i></i><i></i><i></i></span>
+        <span class="ui-title">EYADA — Review Queue</span>
+        <span class="ui-url">Approve before anything is published</span>
+      </div>
+      <div class="ui-body">
+        <div class="ui-row">
+          <span class="ui-thumb">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+          <span>
+            <span class="lbl" style="display:block;color:var(--text);font-weight:700">Why your GPU bill doubled</span>
+            <span class="lbl">00:34 · vertical 1080×1920 · TikTok + YouTube</span>
+          </span>
+          <span class="val"><span class="badge badge--wait">Awaiting approval</span></span>
+        </div>
+        <div class="ui-row">
+          <span class="lbl">Quality critic</span>
+          <span class="val">8.4 / 10 · passed 11 checks</span>
+        </div>
+        <div class="ui-row">
+          <span class="lbl">Claim verification</span>
+          <span class="val"><span class="badge badge--ok">Sources matched</span></span>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" type="button">Approve &amp; prepare</button>
+          <button class="btn btn-ghost btn-sm" type="button">Request changes</button>
+          <button class="btn btn-ghost btn-sm" type="button">Discard</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="features">
-    <div class="container">
-        <div class="section-heading">
-            <div class="eyebrow">Platform Features</div>
-            <h2>Everything needed from idea to measurable result.</h2>
-        </div>
-
-        <div class="grid">
-            <article class="card">
-                <div class="icon">✦</div>
-                <h3>AI Content Generation</h3>
-                <p>Develop content ideas, scripts, hooks, captions and structured creative concepts.</p>
-            </article>
-
-            <article class="card">
-                <div class="icon">✓</div>
-                <h3>Editorial Review</h3>
-                <p>Review and approve content before it moves into the publishing workflow.</p>
-            </article>
-
-            <article class="card">
-                <div class="icon">▶</div>
-                <h3>Video Management</h3>
-                <p>Organize video assets, publishing status, metadata and platform readiness.</p>
-            </article>
-
-            <article class="card">
-                <div class="icon">↗</div>
-                <h3>Social Publishing</h3>
-                <p>Send approved content to authorized TikTok, YouTube and X accounts.</p>
-            </article>
-
-            <article class="card">
-                <div class="icon">▥</div>
-                <h3>Performance Analytics</h3>
-                <p>Track available engagement and performance indicators after publication.</p>
-            </article>
-
-            <article class="card">
-                <div class="icon">∞</div>
-                <h3>Continuous Improvement</h3>
-                <p>Use content results and audience signals to improve future content decisions.</p>
-            </article>
-        </div>
+<!-- ====================== TRUST STRIP ====================== -->
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><b>3</b><span>Platforms supported — TikTok, YouTube, X</span></div>
+      <div class="stat"><b>7</b><span>Pipeline stages from idea to finished MP4</span></div>
+      <div class="stat"><b>11</b><span>Quality dimensions scored before a draft can pass</span></div>
+      <div class="stat"><b>0</b><span>Posts published without a human pressing approve</span></div>
     </div>
+  </div>
 </section>
 
-<section id="workflow">
-    <div class="container">
-        <div class="section-heading">
-            <div class="eyebrow">How It Works</div>
-            <h2>A clear end-to-end content workflow.</h2>
-        </div>
-
-        <div class="workflow">
-            <div class="step">
-                <div class="step-number">1</div>
-                <strong>Discover</strong>
-                <p>Identify ideas and topics suitable for the audience.</p>
-            </div>
-
-            <div class="step">
-                <div class="step-number">2</div>
-                <strong>Create</strong>
-                <p>Generate scripts, captions and video content.</p>
-            </div>
-
-            <div class="step">
-                <div class="step-number">3</div>
-                <strong>Review</strong>
-                <p>Approve the content and publishing details.</p>
-            </div>
-
-            <div class="step">
-                <div class="step-number">4</div>
-                <strong>Publish</strong>
-                <p>Send approved content to the selected platform.</p>
-            </div>
-
-            <div class="step">
-                <div class="step-number">5</div>
-                <strong>Learn</strong>
-                <p>Use performance results to improve future decisions.</p>
-            </div>
-        </div>
+<!-- ====================== FEATURES ====================== -->
+<section class="section" id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Product</span>
+      <h2>Everything between “I need to post” and a finished, on-brand video</h2>
+      <p>
+        Most tools help you write a caption. EYADA owns the whole production line — research,
+        script, narration, visuals, render, packaging and measurement — and hands you a finished
+        asset to approve or reject.
+      </p>
     </div>
+
+    <div class="grid grid-3">
+      <article class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" stroke-linecap="round"/></svg></div>
+        <h3>Topic research</h3>
+        <p>Pulls live trends, news and public creator signals, then filters them against your niche so you are not chasing topics your audience does not care about.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h10M4 18h13" stroke-linecap="round"/></svg></div>
+        <h3>Script generation</h3>
+        <p>Writes a short-form script with a hook, a single clear message and a payoff — in Arabic or English — following the rules your channel has been trained on.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M12 21a9 9 0 110-18 9 9 0 010 18z" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Quality gate</h3>
+        <p>An independent critic scores every draft across 11 dimensions. Anything below the bar is repaired or rejected — it never reaches your review queue.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v4M12 17v4M5.6 5.6l2.9 2.9M15.5 15.5l2.9 2.9M3 12h4M17 12h4M5.6 18.4l2.9-2.9M15.5 8.5l2.9-2.9" stroke-linecap="round"/></svg></div>
+        <h3>Claim verification</h3>
+        <p>Any statistic or factual claim in a script is checked against the underlying research. If a source does not support it, the line is removed — not published and corrected later.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 10l4.55-2.27A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.89L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Rendering &amp; narration</h3>
+        <p>Produces a finished vertical MP4 with narration, captions and motion — sized for TikTok and YouTube Shorts without a manual editing pass.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Human approval</h3>
+        <p>Every asset lands in a review queue. A person watches it and decides. There is no setting anywhere in EYADA that publishes on your behalf.</p>
+      </article>
+    </div>
+  </div>
 </section>
 
-<section id="platforms">
-    <div class="container">
-        <div class="section-heading">
-            <div class="eyebrow">Connected Channels</div>
-            <h2>Designed for modern multi-platform publishing.</h2>
-        </div>
-
-        <div class="platforms">
-            <div class="platform">TikTok</div>
-            <div class="platform">YouTube</div>
-            <div class="platform">X</div>
-            <div class="platform">Content Analytics</div>
-            <div class="platform">AI Recommendations</div>
-        </div>
+<!-- ====================== AI WORKFLOW ====================== -->
+<section class="section section--panel" id="workflow">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">AI Workflow</span>
+      <h2>Nine stages. One of them is a person.</h2>
+      <p>
+        This is the exact order EYADA works in. The pipeline pauses at stage 6 and does not
+        continue until a human approves the asset.
+      </p>
     </div>
+
+    <div class="flow">
+      <div class="flow-step">
+        <span class="flow-num" aria-hidden="true"></span>
+        <div class="flow-body">
+          <h3>Signal intake <span class="tag tag--ai">Automated</span></h3>
+          <p>Trends, news and public creator activity are collected and scored for relevance to your channel.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num" aria-hidden="true"></span>
+        <div class="flow-body">
+          <h3>Idea shortlist <span class="tag tag--ai">Automated</span></h3>
+          <p>Candidate topics are de-duplicated against everything you have already published, then ranked.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num" aria-hidden="true"></span>
+        <div class="flow-body">
+          <h3>Script &amp; narration <span class="tag tag--ai">Automated</span></h3>
+          <p>A short-form script is written around one message, with a hook in the first three seconds and a payoff at the end.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num" aria-hidden="true"></span>
+        <div class="flow-body">
+          <h3>Quality critic &amp; repair <span class="tag tag--ai">Automated</span></h3>
+          <p>Eleven scored dimensions plus claim verification. Weak scenes are rewritten; failing drafts are discarded.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num" aria-hidden="true"></span>
+        <div class="flow-body">
+          <h3>Render <span class="tag tag--ai">Automated</span></h3>
+          <p>Visuals, captions, motion and voice are composited into a finished vertical MP4.</p>
+        </div>
+      </div>
+      <div class="flow-step" style="border-color:rgba(251,191,36,.4);background:linear-gradient(100deg,rgba(251,191,36,.07),rgba(8,13,24,.4))">
+        <span class="flow-num" aria-hidden="true" style="color:#fbbf24;background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.34)"></span>
+        <div class="flow-body">
+          <h3>Human review <span class="tag tag--human">You decide</span></h3>
+          <p>The pipeline stops here. You watch the video, read the caption, and approve, request changes, or discard it. Nothing moves forward on its own.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num" aria-hidden="true"></span>
+        <div class="flow-body">
+          <h3>Platform packaging <span class="tag tag--ai">Automated</span></h3>
+          <p>Approved assets get a title, description, hashtags and thumbnail shaped for each destination platform.</p>
+        </div>
+      </div>
+      <div class="flow-step" style="border-color:rgba(251,191,36,.4);background:linear-gradient(100deg,rgba(251,191,36,.07),rgba(8,13,24,.4))">
+        <span class="flow-num" aria-hidden="true" style="color:#fbbf24;background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.34)"></span>
+        <div class="flow-body">
+          <h3>Publish <span class="tag tag--human">You press the button</span></h3>
+          <p>You choose the destination and confirm. On TikTok the video is delivered to your drafts, so you write the caption, pick the privacy settings and publish from inside the TikTok app itself.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num" aria-hidden="true"></span>
+        <div class="flow-body">
+          <h3>Measure &amp; learn <span class="tag tag--ai">Automated</span></h3>
+          <p>Performance is read back from the platform and fed into the next round of decisions — so the system gets more useful the longer you run it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="contact">
-    <div class="container">
-        <div class="about">
-            <div class="about-copy">
-                <div class="eyebrow">Privacy and Control</div>
-                <h2>Authorized access only.</h2>
-                <p>
-                    EYADA accesses connected platform information only after explicit user
-                    authorization. Access is limited to the functionality required to provide
-                    authentication, publishing and analytics services.
-                </p>
-
-                <div class="actions" style="justify-content:flex-start">
-                    <a class="button button-secondary" href="privacy.html">Privacy Policy</a>
-                    <a class="button button-secondary" href="terms.html">Terms of Service</a>
-                </div>
-            </div>
-
-            <div class="contact-card">
-                <h3>Contact</h3>
-                <p>For product, privacy or integration enquiries:</p>
-                <p><a href="mailto:eyada.world@gmail.com">eyada.world@gmail.com</a></p>
-                <p>EYADA is an independent online AI content platform.</p>
-            </div>
-        </div>
+<!-- ====================== SUPPORTED PLATFORMS ====================== -->
+<section class="section" id="platforms">
+  <div class="wrap">
+    <div class="section-head section-head--center">
+      <span class="eyebrow">Supported platforms</span>
+      <h2>Three destinations, one production line</h2>
+      <p>Connect the accounts you want. Each connection is a separate consent and can be revoked independently.</p>
     </div>
+
+    <div class="grid grid-3">
+      <article class="card">
+        <div class="platform-mark">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M33.5 10.2c-2.3-1.5-3.8-4-4-6.7h-5.6v22.9a4.7 4.7 0 11-3.4-4.5v-5.7a10.3 10.3 0 1013.7 9.7v-9.3a15 15 0 008.6 2.7v-5.6a9.3 9.3 0 01-5.3-1.6c-1.5-.6-2.8-1.2-4-1.9z" fill="#25f4ee"/>
+            <path d="M35.5 12.2c-2.3-1.5-3.8-4-4-6.7h-5.6v22.9a4.7 4.7 0 11-3.4-4.5v-5.7a10.3 10.3 0 1013.7 9.7v-9.3a15 15 0 008.6 2.7v-5.6a9.3 9.3 0 01-9.3-3.5z" fill="#fe2c55" opacity=".85"/>
+          </svg>
+          <span>TikTok</span>
+        </div>
+        <p>Send finished vertical videos to your TikTok account as drafts, and read back your own public performance data.</p>
+        <p class="small mb0"><a href="#tiktok">See the TikTok integration →</a></p>
+      </article>
+
+      <article class="card">
+        <div class="platform-mark">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <rect x="4" y="11" width="40" height="26" rx="7" fill="#ff4444"/>
+            <path d="M20 18l11 7-11 7z" fill="#fff"/>
+          </svg>
+          <span>YouTube</span>
+        </div>
+        <p>Publish Shorts and long-form uploads with generated titles, descriptions and chapters, and pull retention data back into the learning loop.</p>
+        <p class="small mb0"><a href="#youtube">See the YouTube integration →</a></p>
+      </article>
+
+      <article class="card">
+        <div class="platform-mark">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M28.9 21.6L42.3 6h-3.2L27.5 19.5 18.2 6H7.5l14 20.4L7.5 42.8h3.2l12.3-14.3 9.8 14.3h10.7L28.9 21.6zm-4.4 5.1l-1.4-2L11.8 8.4h4.9l9.2 13.1 1.4 2 11.9 17h-4.9l-9.8-13.8z" fill="#e7e9ea"/>
+          </svg>
+          <span>X</span>
+        </div>
+        <p>Turn the same idea into a written post or thread, with the video attached, so one production run covers more than one surface.</p>
+        <p class="small mb0"><a href="#x">See the X integration →</a></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== TIKTOK INTEGRATION ====================== -->
+<section class="section section--panel" id="tiktok">
+  <div class="wrap platform">
+    <div class="platform-copy">
+      <div class="platform-mark">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M33.5 10.2c-2.3-1.5-3.8-4-4-6.7h-5.6v22.9a4.7 4.7 0 11-3.4-4.5v-5.7a10.3 10.3 0 1013.7 9.7v-9.3a15 15 0 008.6 2.7v-5.6a9.3 9.3 0 01-5.3-1.6c-1.5-.6-2.8-1.2-4-1.9z" fill="#25f4ee"/>
+          <path d="M35.5 12.2c-2.3-1.5-3.8-4-4-6.7h-5.6v22.9a4.7 4.7 0 11-3.4-4.5v-5.7a10.3 10.3 0 1013.7 9.7v-9.3a15 15 0 008.6 2.7v-5.6a9.3 9.3 0 01-9.3-3.5z" fill="#fe2c55" opacity=".85"/>
+        </svg>
+        <span>TikTok integration</span>
+      </div>
+      <h2>Log in with TikTok, upload a draft, watch the status</h2>
+      <p>
+        You connect your TikTok account once through TikTok's own authorization screen. EYADA never
+        sees or stores your TikTok password. From then on, an approved video can be sent to your
+        account with the metadata you choose.
+      </p>
+
+      <ul class="checks">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b>Login Kit</b> — authorization happens on TikTok's domain. We receive a token, never a password, and you can revoke it from your TikTok settings at any time.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b>Your account is shown before anything is sent</b> — your nickname and avatar are loaded from TikTok and displayed on the upload screen, so you always know which account is about to receive the video.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b>Videos arrive as drafts, never as posts</b> — EYADA sends the file to your TikTok inbox. You open the notification in TikTok, write the caption, choose the privacy and interaction settings there, and publish it yourself.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b>The caption comes with it</b> — EYADA writes a suggested caption and hashtags and puts them one tap away, so you can paste them into TikTok instead of retyping.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b>Upload status is tracked</b> — TikTok processes uploads asynchronously, so EYADA polls the publish status and tells you the moment the draft is ready in your TikTok inbox.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b>Your own data only</b> — EYADA reads your profile and your own videos' public metrics to improve your next script. It does not read other people's private data.</span></li>
+      </ul>
+
+      <p class="small muted">
+        Scopes requested: <code>user.info.basic</code>, <code>user.info.profile</code>,
+        <code>user.info.stats</code>, <code>video.list</code>, <code>video.upload</code>.
+        EYADA does not request permission to publish public posts on your behalf.
+        What each scope is used for is listed in the <a href="privacy.html#tiktok-data">Privacy Policy</a>.
+      </p>
+    </div>
+
+    <!-- Product interface: the Post to TikTok screen -->
+    <div class="ui" role="img" aria-label="Screenshot of the Post to TikTok screen in EYADA">
+      <div class="ui-bar">
+        <span class="ui-dots"><i></i><i></i><i></i></span>
+        <span class="ui-title">Send to TikTok drafts</span>
+      </div>
+      <div class="ui-body">
+        <div class="ui-row">
+          <span class="ui-thumb"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
+          <span>
+            <span class="lbl" style="display:block;color:var(--text);font-weight:700">Posting to @your_account</span>
+            <span class="lbl">Creator info loaded from TikTok</span>
+          </span>
+        </div>
+        <div class="ui-row"><span class="lbl">Destination</span><span class="val">Your TikTok drafts</span></div>
+        <div class="ui-row"><span class="lbl">File</span><span class="val">1080×1920 · 0:29 · 5.0 MB</span></div>
+        <div class="ui-row" style="align-items:flex-start">
+          <span style="font-size:.86rem;color:var(--text-soft);line-height:1.55">
+            <span class="lbl" style="display:block;color:var(--text);font-weight:700;margin-bottom:4px">Suggested caption</span>
+            Why your memory keeps the fear and forgets the meal — in 29 seconds.
+          </span>
+        </div>
+        <p class="small muted mb0" style="padding:0 4px">
+          You will add the caption and choose the privacy settings in TikTok when you finish the draft.
+          By uploading, you agree to TikTok's Music Usage Confirmation.
+        </p>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-primary btn-sm" type="button">Send to my TikTok drafts</button>
+          <button class="btn btn-ghost btn-sm" type="button">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== YOUTUBE INTEGRATION ====================== -->
+<section class="section" id="youtube">
+  <div class="wrap platform platform--rev">
+    <div class="platform-copy">
+      <div class="platform-mark">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="11" width="40" height="26" rx="7" fill="#ff4444"/><path d="M20 18l11 7-11 7z" fill="#fff"/></svg>
+        <span>YouTube integration</span>
+      </div>
+      <h2>Shorts and long-form, packaged and measured</h2>
+      <p>
+        Connect a YouTube channel with Google sign-in. EYADA prepares the upload — title,
+        description, tags, thumbnail — and reads channel analytics back so the next video is
+        written with real retention data instead of guesses.
+      </p>
+      <ul class="checks">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b>Upload with full metadata</b> — the same approved asset is packaged for Shorts or standard upload.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b>Retention read-back</b> — average view duration and traffic sources feed the learning loop.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b>Private-first uploads</b> — new uploads can be sent as private or unlisted so you review them on YouTube before making them public.</span></li>
+      </ul>
+    </div>
+
+    <div class="ui" role="img" aria-label="Screenshot of the YouTube packaging screen">
+      <div class="ui-bar"><span class="ui-dots"><i></i><i></i><i></i></span><span class="ui-title">YouTube — Packaging</span></div>
+      <div class="ui-body">
+        <div class="ui-row"><span class="lbl">Title</span><span class="val">Why your GPU bill doubled</span></div>
+        <div class="ui-row"><span class="lbl">Format</span><span class="val">Short · 0:34</span></div>
+        <div class="ui-row"><span class="lbl">Visibility</span><span class="val">Private (you publish)</span></div>
+        <div class="ui-row"><span class="lbl">Avg. view duration</span><span class="val">18.4s</span></div>
+        <div class="chart" aria-hidden="true">
+          <i style="height:42%"></i><i style="height:58%"></i><i style="height:51%"></i><i style="height:74%"></i>
+          <i style="height:66%"></i><i style="height:88%"></i><i style="height:71%"></i><i style="height:95%"></i>
+          <i style="height:80%"></i><i style="height:62%"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== X INTEGRATION ====================== -->
+<section class="section section--panel" id="x">
+  <div class="wrap platform">
+    <div class="platform-copy">
+      <div class="platform-mark">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M28.9 21.6L42.3 6h-3.2L27.5 19.5 18.2 6H7.5l14 20.4L7.5 42.8h3.2l12.3-14.3 9.8 14.3h10.7L28.9 21.6zm-4.4 5.1l-1.4-2L11.8 8.4h4.9l9.2 13.1 1.4 2 11.9 17h-4.9l-9.8-13.8z" fill="#e7e9ea"/></svg>
+        <span>X integration</span>
+      </div>
+      <h2>The same idea, in writing</h2>
+      <p>
+        A video script and a good post are the same argument in different clothes. EYADA drafts the
+        written version — single post or thread — attaches the rendered video, and puts it in the
+        same approval queue as everything else.
+      </p>
+      <ul class="checks">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b>Posts and threads</b> — long-form or split, with the media uploaded and attached.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b>Engagement read-back</b> — impressions and replies are measured and used to rank future topics.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b>No automated replies</b> — EYADA does not reply, DM or follow on your behalf.</span></li>
+      </ul>
+    </div>
+
+    <div class="ui" role="img" aria-label="Screenshot of a drafted X post awaiting approval">
+      <div class="ui-bar"><span class="ui-dots"><i></i><i></i><i></i></span><span class="ui-title">X — Draft</span></div>
+      <div class="ui-body">
+        <div class="ui-row" style="align-items:flex-start">
+          <span style="font-size:.92rem;color:var(--text-soft);line-height:1.6">
+            Your GPU bill did not double because you trained more. It doubled because idle instances
+            bill exactly like busy ones — and nothing in the default dashboard tells you which is which.
+          </span>
+        </div>
+        <div class="ui-row"><span class="lbl">Attachment</span><span class="val">video · 0:34</span></div>
+        <div class="ui-row"><span class="lbl">Status</span><span class="val"><span class="badge badge--wait">Awaiting approval</span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== ANALYTICS ====================== -->
+<section class="section" id="analytics">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Analytics</span>
+      <h2>One dashboard for what actually happened</h2>
+      <p>
+        Each platform shows you its own numbers in its own shape. EYADA pulls the metrics you are
+        entitled to see for your own accounts into a single view, so you can compare a TikTok post
+        and a YouTube Short on the same axis.
+      </p>
+    </div>
+
+    <div class="grid grid-2" style="align-items:start">
+      <div class="ui" role="img" aria-label="Screenshot of the EYADA analytics dashboard">
+        <div class="ui-bar"><span class="ui-dots"><i></i><i></i><i></i></span><span class="ui-title">Analytics — last 30 days</span></div>
+        <div class="ui-body">
+          <div class="chart" aria-hidden="true">
+            <i style="height:34%"></i><i style="height:46%"></i><i style="height:39%"></i><i style="height:62%"></i>
+            <i style="height:55%"></i><i style="height:78%"></i><i style="height:69%"></i><i style="height:92%"></i>
+            <i style="height:74%"></i><i style="height:86%"></i><i style="height:58%"></i><i style="height:70%"></i>
+          </div>
+          <div class="ui-row"><span class="lbl">Watched to the end</span><span class="val">31.7%</span></div>
+          <div class="ui-row"><span class="lbl">Best performing hook</span><span class="val">Open loop, 2.1s</span></div>
+          <div class="ui-row"><span class="lbl">Weakest stage</span><span class="val">Scene 3 drop-off</span></div>
+        </div>
+      </div>
+
+      <div class="grid" style="gap:14px">
+        <article class="card card--flat">
+          <h3>Per-video, not per-account</h3>
+          <p class="mb0">Retention curves are attached to the script that produced them, so you can see which hook, which pacing and which topic held attention.</p>
+        </article>
+        <article class="card card--flat">
+          <h3>Comparable across platforms</h3>
+          <p class="mb0">The same idea posted to TikTok and YouTube is tracked as one experiment with two results.</p>
+        </article>
+        <article class="card card--flat">
+          <h3>Only your own accounts</h3>
+          <p class="mb0">EYADA reads analytics for accounts you have explicitly connected. It does not scrape other creators' private data.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== AI LEARNING ====================== -->
+<section class="section section--panel" id="learning">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">AI Learning</span>
+      <h2>The part that gets better while you sleep</h2>
+      <p>
+        A generator that never sees its results just repeats itself. EYADA closes the loop: every
+        published asset is measured, every measurement updates the model of what works on your
+        channel, and the next script is written under those updated beliefs.
+      </p>
+    </div>
+
+    <div class="grid grid-4">
+      <article class="card card--flat">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+        <h3>Measure</h3>
+        <p class="mb0">Views, retention and traffic sources are collected on a schedule for every asset you published.</p>
+      </article>
+      <article class="card card--flat">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Attribute</h3>
+        <p class="mb0">Results are tied back to the specific hook, structure and topic that produced them.</p>
+      </article>
+      <article class="card card--flat">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg></div>
+        <h3>Update</h3>
+        <p class="mb0">Beliefs about your audience are revised — and old evidence is allowed to expire.</p>
+      </article>
+      <article class="card card--flat">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v6h6M20 20v-6h-6" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 9A8 8 0 006 5.3M4 15a8 8 0 0014 3.7" stroke-linecap="round"/></svg></div>
+        <h3>Re-decide</h3>
+        <p class="mb0">The next production run starts from the updated beliefs, not from the original assumptions.</p>
+      </article>
+    </div>
+
+    <div class="callout mt24">
+      <p class="mb0">
+        <strong>Honest by design:</strong> when the data says a change did not help, EYADA records
+        that too. A tactic with no measured benefit is dropped rather than kept for the sake of
+        looking sophisticated.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== SCREENSHOTS ====================== -->
+<section class="section" id="screenshots">
+  <div class="wrap">
+    <div class="section-head section-head--center">
+      <span class="eyebrow">Inside the product</span>
+      <h2>What you actually look at every day</h2>
+      <p>Three screens carry most of the work: the pipeline, the review queue, and the post screen.</p>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="ui" role="img" aria-label="Screenshot of the production pipeline view">
+        <div class="ui-bar"><span class="ui-dots"><i></i><i></i><i></i></span><span class="ui-title">Pipeline</span></div>
+        <div class="ui-body">
+          <div class="ui-row"><span class="lbl">Idea intake</span><span class="val"><span class="badge badge--ok">Done</span></span></div>
+          <div class="ui-row"><span class="lbl">Script</span><span class="val"><span class="badge badge--ok">Done</span></span></div>
+          <div class="ui-row"><span class="lbl">Critic</span><span class="val"><span class="badge badge--ok">8.4</span></span></div>
+          <div class="ui-row"><span class="lbl">Render</span><span class="val">72%</span></div>
+          <div class="ui-meter"><i style="width:72%"></i></div>
+          <div class="ui-row"><span class="lbl">Review</span><span class="val"><span class="badge badge--wait">Queued</span></span></div>
+        </div>
+      </div>
+
+      <div class="ui" role="img" aria-label="Screenshot of the review queue with three assets">
+        <div class="ui-bar"><span class="ui-dots"><i></i><i></i><i></i></span><span class="ui-title">Review queue</span></div>
+        <div class="ui-body">
+          <div class="ui-row">
+            <span class="ui-thumb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <span class="lbl">GPU bill · 0:34</span><span class="val"><span class="badge badge--wait">Review</span></span>
+          </div>
+          <div class="ui-row">
+            <span class="ui-thumb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <span class="lbl">Context windows · 0:41</span><span class="val"><span class="badge badge--wait">Review</span></span>
+          </div>
+          <div class="ui-row">
+            <span class="ui-thumb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <span class="lbl">Latency myth · 0:29</span><span class="val"><span class="badge badge--ok">Approved</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui" role="img" aria-label="Screenshot of the TikTok upload status screen">
+        <div class="ui-bar"><span class="ui-dots"><i></i><i></i><i></i></span><span class="ui-title">Upload status</span></div>
+        <div class="ui-body">
+          <div class="ui-row"><span class="lbl">Destination</span><span class="val">TikTok</span></div>
+          <div class="ui-row"><span class="lbl">Transfer</span><span class="val">100%</span></div>
+          <div class="ui-meter"><i style="width:100%"></i></div>
+          <div class="ui-row"><span class="lbl">TikTok processing</span><span class="val"><span class="badge badge--wait">In progress</span></span></div>
+          <div class="ui-row"><span class="lbl">Result</span><span class="val"><span class="badge badge--draft">Draft in your inbox</span></span></div>
+          <p class="small muted mb0" style="padding:0 4px">Processing can take a few minutes. You will find the draft in your TikTok notifications.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== FAQ ====================== -->
+<section class="section section--panel" id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">FAQ</span>
+      <h2>Questions people ask before connecting an account</h2>
+    </div>
+
+    <div class="faq">
+      <details open>
+        <summary>Will EYADA post to my accounts automatically?</summary>
+        <div class="faq-a"><p>No. There is no auto-publish anywhere in the product, on any platform. A person has to review the asset and press publish. On TikTok, videos additionally arrive as a draft, so you get a second look inside the TikTok app before anything becomes visible.</p></div>
+      </details>
+
+      <details>
+        <summary>What does EYADA do with my TikTok data?</summary>
+        <div class="faq-a"><p>It reads your basic profile so the post screen can show which account is connected, and your own videos' public metrics so the next script can be written with real performance data. It is never sold, never shared for advertising, and never used to train a third party's model. The full list is in the <a href="privacy.html#tiktok-data">Privacy Policy</a>.</p></div>
+      </details>
+
+      <details>
+        <summary>Do you store my TikTok password?</summary>
+        <div class="faq-a"><p>No. Authorization happens on TikTok's own website. EYADA receives an access token, not credentials, and that token can be revoked by you at any time from TikTok's settings — or by deleting your EYADA account.</p></div>
+      </details>
+
+      <details>
+        <summary>Can I disconnect a platform later?</summary>
+        <div class="faq-a"><p>Yes. Each platform is connected and revoked independently, from inside EYADA or from the platform's own app settings. Revoking access stops all further API calls immediately.</p></div>
+      </details>
+
+      <details>
+        <summary>How do I delete my data?</summary>
+        <div class="faq-a"><p>Email <a href="mailto:abdull.alshammari@gmail.com">abdull.alshammari@gmail.com</a> from the address on your account, or use the in-app delete option. Accounts and associated platform data are deleted within 30 days. See <a href="privacy.html#deletion">Data deletion</a>.</p></div>
+      </details>
+
+      <details>
+        <summary>Who writes the content — the AI or me?</summary>
+        <div class="faq-a"><p>The system drafts it; you own it and you approve it. You can edit any script, caption or title before publishing, and you are responsible for what you choose to post — as set out in the <a href="terms.html#content">Terms of Service</a>.</p></div>
+      </details>
+
+      <details>
+        <summary>Which languages are supported?</summary>
+        <div class="faq-a"><p>Arabic and English, including right-to-left captions and Arabic narration.</p></div>
+      </details>
+
+      <details>
+        <summary>Is EYADA affiliated with TikTok, YouTube or X?</summary>
+        <div class="faq-a"><p>No. EYADA is an independent product. It uses the official public APIs of those platforms under their developer terms. All trademarks belong to their respective owners.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== CONTACT ====================== -->
+<section class="section" id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Contact</span>
+      <h2>Talk to a person</h2>
+      <p>Support, privacy requests, data deletion and access requests all reach the same inbox, and are answered by the team that builds the product.</p>
+    </div>
+
+    <div class="contact-card">
+      <div class="contact-item">
+        <div class="k">General &amp; support</div>
+        <div class="v"><a href="mailto:abdull.alshammari@gmail.com">abdull.alshammari@gmail.com</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="k">Privacy &amp; data deletion</div>
+        <div class="v"><a href="mailto:abdull.alshammari@gmail.com?subject=Data%20deletion%20request">abdull.alshammari@gmail.com</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="k">Response time</div>
+        <div class="v">Within 5 business days</div>
+      </div>
+      <div class="contact-item">
+        <div class="k">Operated from</div>
+        <div class="v">Riyadh, Saudi Arabia</div>
+      </div>
+    </div>
+  </div>
 </section>
 
 </main>
 
-<footer>
-    <div class="container footer-inner">
-        <div>© 2026 EYADA AI. All rights reserved.</div>
+<!-- ====================== FOOTER ====================== -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col footer-about">
+        <a class="brand" href="index.html" aria-label="EYADA home">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="32" cy="32" r="19" fill="#06131f" stroke="#22d3ee" stroke-width="3"/>
+            <ellipse cx="32" cy="32" rx="8.5" ry="19" fill="none" stroke="#22d3ee" stroke-width="1.6" opacity=".55"/>
+            <path d="M13 32h38" stroke="#22d3ee" stroke-width="1.6" opacity=".45"/>
+            <circle cx="32" cy="32" r="3.4" fill="#e0fbff"/>
+          </svg>
+          <span><span class="brand-name">EYADA</span><span class="brand-sub">AI Content System</span></span>
+        </a>
+        <p>An AI production line for short-form video — with a human approving every single post.</p>
+      </div>
 
-        <div class="footer-links">
-            <a href="privacy.html">Privacy</a>
-            <a href="terms.html">Terms</a>
-            <a href="mailto:eyada.world@gmail.com">Contact</a>
-        </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#workflow">AI workflow</a></li>
+          <li><a href="#analytics">Analytics</a></li>
+          <li><a href="#learning">AI learning</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Platforms</h4>
+        <ul>
+          <li><a href="#tiktok">TikTok</a></li>
+          <li><a href="#youtube">YouTube</a></li>
+          <li><a href="#x">X</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="privacy.html#deletion">Data deletion</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
     </div>
+
+    <div class="footer-bottom">
+      <span>&copy; <span data-year>2026</span> EYADA. All rights reserved.</span>
+      <span class="muted">TikTok, YouTube and X are trademarks of their respective owners. EYADA is not affiliated with them.</span>
+      <nav aria-label="Legal">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </nav>
+    </div>
+  </div>
 </footer>
 
+<script src="assets/app.js" defer></script>
 </body>
 </html>

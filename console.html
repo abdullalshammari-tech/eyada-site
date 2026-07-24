@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Send to TikTok — EYADA</title>
+<meta name="description" content="EYADA publishing console: review an approved video and send it to your connected TikTok account as a draft.">
+<meta name="robots" content="noindex">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#04070e">
+
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html" aria-label="EYADA home">
+      <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="hdrG" x1="6" y1="8" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#67e8f9"/><stop offset="1" stop-color="#0891b2"/>
+          </linearGradient>
+        </defs>
+        <circle cx="32" cy="32" r="19" fill="#06131f" stroke="url(#hdrG)" stroke-width="3"/>
+        <ellipse cx="32" cy="32" rx="8.5" ry="19" fill="none" stroke="#22d3ee" stroke-width="1.6" opacity=".55"/>
+        <path d="M13 32h38" stroke="#22d3ee" stroke-width="1.6" opacity=".45" stroke-linecap="round"/>
+        <g fill="#a5f3fc"><circle cx="23" cy="23" r="2.2"/><circle cx="41" cy="26" r="1.9"/><circle cx="26" cy="42" r="1.9"/></g>
+        <path d="M23 23 41 26M23 23 26 42" stroke="#67e8f9" stroke-width="1.2" opacity=".6" fill="none"/>
+        <circle cx="32" cy="32" r="3.4" fill="#e0fbff"/>
+      </svg>
+      <span>
+        <span class="brand-name">EYADA</span>
+        <span class="brand-sub">AI Content System</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      <span class="nav-main" style="display:contents">
+        <a href="index.html">Home</a>
+      </span>
+      <span class="nav-legal">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="section">
+  <div class="wrap">
+
+    <!-- ================= STATE A: not connected ================= -->
+    <section id="state-connect">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Step 1 of 3</span>
+        <h1 style="font-size:clamp(1.7rem,3.6vw,2.4rem)">Connect your TikTok account</h1>
+        <p>
+          You will be taken to TikTok's own website to approve access. EYADA never sees your
+          password, and you can revoke access at any time from your TikTok settings.
+        </p>
+      </div>
+
+      <div class="connect-card">
+        <div class="scope-list">
+          <h3 style="font-size:.95rem;margin-bottom:14px">EYADA is asking for permission to:</h3>
+          <ul class="checks">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span><b>Read your profile</b> — so we can show which account a video will be sent to.</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span><b>Read your own videos and their public stats</b> — so we can measure how your posts performed.</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span><b>Upload a video to your account</b> — delivered to your drafts, so you write the caption and publish it yourself inside TikTok.</span></li>
+          </ul>
+          <p class="small muted mb0">
+            EYADA does not ask for permission to publish public posts on your behalf.
+            Every permission is explained in our <a href="privacy.html#tiktok-data">Privacy Policy</a>.
+          </p>
+        </div>
+
+        <div class="connect-action">
+          <button class="btn-tiktok" id="btn-connect" type="button">
+            <svg viewBox="0 0 48 48" aria-hidden="true" width="22" height="22">
+              <path d="M33.5 10.2c-2.3-1.5-3.8-4-4-6.7h-5.6v22.9a4.7 4.7 0 11-3.4-4.5v-5.7a10.3 10.3 0 1013.7 9.7v-9.3a15 15 0 008.6 2.7v-5.6a9.3 9.3 0 01-5.3-1.6c-1.5-.6-2.8-1.2-4-1.9z" fill="#25f4ee"/>
+              <path d="M35.5 12.2c-2.3-1.5-3.8-4-4-6.7h-5.6v22.9a4.7 4.7 0 11-3.4-4.5v-5.7a10.3 10.3 0 1013.7 9.7v-9.3a15 15 0 008.6 2.7v-5.6a9.3 9.3 0 01-9.3-3.5z" fill="#fe2c55" opacity=".9"/>
+            </svg>
+            Continue with TikTok
+          </button>
+          <p class="small muted" style="margin-top:16px;margin-bottom:0">
+            By continuing you agree to EYADA's <a href="terms.html">Terms of Service</a> and
+            <a href="privacy.html">Privacy Policy</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= STATE B: connected — send to drafts ================= -->
+    <section id="state-post" hidden>
+
+      <!-- Connected account: read with user.info.basic / .profile / .stats -->
+      <div class="account-bar">
+        <img id="creator-avatar" alt="" width="52" height="52">
+        <div class="account-id">
+          <div class="account-name" id="creator-nickname">…</div>
+          <div class="account-handle" id="creator-username">…</div>
+        </div>
+        <dl class="account-stats" id="account-stats">
+          <div><dt>Followers</dt><dd id="stat-followers">—</dd></div>
+          <div><dt>Likes</dt><dd id="stat-likes">—</dd></div>
+          <div><dt>Videos</dt><dd id="stat-videos">—</dd></div>
+        </dl>
+        <button class="btn btn-ghost btn-sm" type="button" id="btn-disconnect">Disconnect</button>
+      </div>
+
+      <div class="section-head" style="margin-top:34px">
+        <span class="eyebrow">Step 2 of 3</span>
+        <h1 style="font-size:clamp(1.6rem,3.4vw,2.2rem)">Send this video to your TikTok drafts</h1>
+        <p>
+          This video was approved in your review queue. EYADA will place it in your TikTok drafts —
+          you finish and publish it inside the TikTok app.
+        </p>
+      </div>
+
+      <div class="composer">
+        <aside class="composer-preview">
+          <div class="phone">
+            <video id="preview-video" playsinline muted loop controls
+                   poster="assets/preview-poster.jpg">
+              <source src="media/approved-video.mp4" type="video/mp4">
+              Your browser cannot play this preview.
+            </video>
+          </div>
+          <div class="preview-meta">
+            <div><span class="k">Duration</span><span class="v" id="meta-duration">—</span></div>
+            <div><span class="k">Resolution</span><span class="v">1080 × 1920</span></div>
+            <div><span class="k">Approved</span><span class="v">by you</span></div>
+          </div>
+        </aside>
+
+        <form class="composer-form" id="post-form" novalidate>
+          <div class="destination">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Uploading to the drafts of <b id="dest-account">your account</b></span>
+          </div>
+
+          <div class="field">
+            <label for="f-caption">Suggested caption</label>
+            <textarea id="f-caption" rows="4">Why your memory keeps the fear and forgets the meal — in 29 seconds. #neuroscience #memory #learning</textarea>
+            <div class="field-hint">
+              TikTok asks for the caption when you finish the draft. Copy it now and paste it there.
+            </div>
+            <button class="btn btn-ghost btn-sm" type="button" id="btn-copy" style="justify-self:start">
+              Copy caption
+            </button>
+          </div>
+
+          <p class="legal-consent">
+            By uploading, you agree to TikTok's
+            <a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" rel="noopener">Music Usage Confirmation</a>.
+            You will choose the privacy level and the comment, Duet and Stitch settings inside TikTok
+            before you publish.
+          </p>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit" id="btn-post">Send to my TikTok drafts</button>
+            <a class="btn btn-ghost" href="index.html">Cancel</a>
+          </div>
+          <p class="small muted mb0">
+            Nothing becomes visible to anyone. The video waits in your drafts until you publish it.
+          </p>
+        </form>
+      </div>
+
+      <!-- Read with video.list: the creator's own videos and their public stats -->
+      <section class="section section--tight" id="your-videos">
+        <div class="section-head" style="margin-bottom:22px">
+          <h2 style="font-size:1.35rem">Your recent TikTok videos</h2>
+          <p class="mb0">Read from your account so EYADA can learn which topics held attention.</p>
+        </div>
+        <div class="video-grid" id="video-grid">
+          <p class="muted small" id="videos-empty">Loading your videos…</p>
+        </div>
+      </section>
+    </section>
+
+    <!-- ================= STATE C: upload status ================= -->
+    <section id="state-status" hidden>
+      <div class="section-head">
+        <span class="eyebrow">Step 3 of 3</span>
+        <h1 style="font-size:clamp(1.6rem,3.4vw,2.2rem)" id="status-title">Sending to TikTok…</h1>
+        <p id="status-sub">
+          Your video is being transferred. After the transfer completes, TikTok processes the file —
+          this can take a few minutes.
+        </p>
+      </div>
+
+      <div class="status-panel">
+        <ol class="steps">
+          <li id="step-init"><span class="dot"></span><span>Upload initialised</span><em id="v-init">waiting</em></li>
+          <li id="step-transfer"><span class="dot"></span><span>Video transferred to TikTok</span><em id="v-transfer">waiting</em></li>
+          <li id="step-process"><span class="dot"></span><span>TikTok processing</span><em id="v-process">waiting</em></li>
+          <li id="step-done"><span class="dot"></span><span>Draft ready in your TikTok inbox</span><em id="v-done">waiting</em></li>
+        </ol>
+
+        <div class="ui-meter" style="margin:18px 0"><i id="progress-bar" style="width:4%"></i></div>
+
+        <div class="kv">
+          <div><span class="k">Publish ID</span><span class="v" id="v-publish-id">—</span></div>
+          <div><span class="k">Status</span><span class="v" id="v-status">—</span></div>
+          <div><span class="k">Destination</span><span class="v">Drafts (not published)</span></div>
+        </div>
+
+        <div id="done-actions" hidden style="margin-top:24px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn btn-primary" href="https://www.tiktok.com/" target="_blank" rel="noopener">Open TikTok to finish the draft</a>
+          <a class="btn btn-ghost" href="console.html">Back to the console</a>
+        </div>
+
+        <p class="small muted" style="margin-top:22px;margin-bottom:0">
+          EYADA's part is done. Open the notification in TikTok, add the caption, choose your
+          settings, and publish when you are ready.
+        </p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:0;padding-top:0">
+      <span>&copy; <span data-year>2026</span> EYADA. All rights reserved.</span>
+      <span class="muted">Not affiliated with TikTok. TikTok is a trademark of its owner.</span>
+      <nav aria-label="Legal">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/app.js" defer></script>
+<script src="assets/console.js" defer></script>
+</body>
+</html>
