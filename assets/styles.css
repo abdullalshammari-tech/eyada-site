@@ -208,7 +208,7 @@ code, .mono {
   flex: 0 0 auto;
 }
 .brand:hover { color: var(--text); }
-.brand svg { width: 34px; height: 34px; flex: 0 0 auto; }
+.brand img { width: 34px; height: 34px; flex: 0 0 auto; border-radius: 8px; }
 .brand-name { font-size: 1.16rem; line-height: 1; }
 .brand-sub {
   display: block;
